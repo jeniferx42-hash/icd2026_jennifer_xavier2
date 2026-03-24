@@ -2,8 +2,8 @@
 # DOCUMENTACAO DO SCRIPT
 # ============================================================
 # Arquivo: 01_introducao.R
-# Autor(a): <seu nome>
-# Data: <dd/mm/aaaa>
+# Autor(a): jennifer xavier 
+# Data: 24/03/2026
 # Objetivo: entender os fundamentos da linguagem R
 
 
@@ -13,6 +13,9 @@
 # BLOCO 0 - Configuracoes globais
 # ==========================================
 
+# BLOCO 0 - Configuracoes globais -----------------------------------------
+
+
 # Ajusta localidade para portugues (datas, mensagens e formatos)
 Sys.setlocale("LC_ALL", "pt_BR.UTF-8")
 
@@ -20,6 +23,9 @@ Sys.setlocale("LC_ALL", "pt_BR.UTF-8")
 # ==========================================
 # BLOCO 1 - R como uma grande calculadora
 # ==========================================
+
+#  BLOCO 1 - R como uma grande calculadora --------------------------------
+
 
 # Carrega o pacote se ele tiver sido instalado
 library(tidyverse)
@@ -77,6 +83,9 @@ round(3.14159, digits = 2)
 # BLOCO 2 - Tipos Atômicos e classes
 # ============================================================
 
+# BLOCO 2 - Tipos Atômicos e classes --------------------------------------
+
+
 # Os tipos de dados definem como os dados
 # são armazenados na memória.
 
@@ -116,6 +125,9 @@ f
 # ============================================================
 # BLOCO 3 - Vetores numericos e vetorizacao
 # ============================================================
+
+# BLOCO 3 - Vetores numericos e vetorizacao -------------------------------
+
 
 # Atalho de teclado para inserir <- :
 # Alt + - (Windows/Linux)
@@ -170,6 +182,9 @@ max(receita_diaria)
 # ============================================================
 # BLOCO 4 - Vetores
 # ============================================================
+
+# BLOCO 4 - Vetores -------------------------------------------------------
+
 
 # vetor de caracteres (strings) com nome da empresa
 nome_empresa <- c("Loja A", "Loja B", "Loja C")
@@ -310,6 +325,9 @@ vendas_diarias |>
 # BLOCO 6 - Manipulação de dados com dplyr e uso do pipe
 # ============================================================
 
+# BLOCO 6 - Manipulação de dados com dplyr e uso do pipe ------------------
+
+
 # O operador pipe |> permite encadear operações
 # de forma mais legível.
 
@@ -347,6 +365,9 @@ vendas_diarias |>
 # Exemplo 1 - selecionar e ordenar dados
 # ------------------------------------------------------------
 
+# Exemplo 1 - selecionar e ordenar dados ----------------------------------
+
+
 # Pergunta de negócio:
 # Quero ver as receitas ordenadas da maior para a menor
 
@@ -358,6 +379,9 @@ vendas_diarias |>
 # ------------------------------------------------------------
 # Exemplo 2 - filtrar e selecionar
 # ------------------------------------------------------------
+
+# Exemplo 2 - filtrar e selecionar ----------------------------------------
+
 
 # Pergunta:
 # Quais foram os dias em que o lucro foi maior que 3000?
@@ -371,6 +395,9 @@ vendas_diarias |>
 # Exemplo 3 - resumo estatístico
 # ------------------------------------------------------------
 
+# Exemplo 3 - resumo estatístico ------------------------------------------
+
+
 # Receita média geral
 
 vendas_diarias |>
@@ -383,6 +410,9 @@ vendas_diarias |>
 # ------------------------------------------------------------
 # Exemplo 4 - análise por loja
 # ------------------------------------------------------------
+
+# Exemplo 4 - análise por loja --------------------------------------------
+
 
 # Receita média e lucro médio por loja
 
@@ -399,6 +429,9 @@ vendas_diarias |>
 # Exemplo 5 - ordenar resultados agregados
 # ------------------------------------------------------------
 
+# Exemplo 5 - ordenar resultados agregados --------------------------------
+
+
 # Qual loja teve maior receita média?
 
 vendas_diarias |>
@@ -412,6 +445,9 @@ vendas_diarias |>
 # ============================================================
 # BLOCO 7 - Visualizacao de dados com ggplot2
 # ============================================================
+
+# BLOCO 7 - Visualizacao de dados com ggplot2 -----------------------------
+
 
 # Grafico 1 de barras da receita media por loja
 ggplot(receita_por_loja, aes(x = loja, y = receita_media)) +
@@ -450,6 +486,9 @@ ggplot(vendas_diarias, aes(x = data, y = lucro, size = receita, color = loja)) +
 # ============================================================
 # BLOCO 8 - Resolução dos exercícios propostos nos slides
 # ============================================================
+
+# BLOCO 8 - Resolução dos exercícios propostos nos slides -----------------
+
 
 
 # Solução do Ex. 1
