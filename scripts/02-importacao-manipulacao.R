@@ -1,6 +1,6 @@
 # Arquivo: 02-importacao-manipulacao.R
-# Autor(a): <seu nome>
-# Data: <dd/mm/aaaa>
+# Autor(a): jennifer xavier 
+# Data: 30/03/2026
 # Objetivos:
 # 1. Importar um arquivo csv de dados
 # 2. Preparar os dados para análise
@@ -59,3 +59,27 @@ dados_vendas_limpos <- dados_vendas |>
 
 # verifica a estrutura dos dados
 glimpse(dados_vendas_limpos)
+
+#salva os dados limposem um arquivo rds para análises 
+#futuras sem precisar repetir a preparação dos dados 
+
+## 1. define o caminho relativo para salvar o arquivo rds
+caminho_rds <- here("dados/limpos/dados_vendas_limpos.rds")
+
+## 2. salva o objeto dados_vendas_limpos no formato rds 
+readr::write_rds(dados_vendas_limpos, caminho_rds)
+
+#lendo os dados limpos em uma seção futura
+
+## 1. define o caminho relativo do arquivo rds
+caminho_rds <- here("dados/limpos/dados_vendas_limpos.rds")
+
+##2. lê o arquivo rds e armazena em um objeto 
+dados_vendas_limpos <- readr::read_rds(caminho_rds)
+
+
+
+# A função filter  --------------------------------------------------------
+
+
+
