@@ -163,3 +163,37 @@ dados_vendas_limpos |>
     TRUE ~ "Sem Receita"
   )) |>
   select(cidade, produto, categoria_receita)
+
+
+# As função summarise e group_by ------------------------------------------
+
+# calcula a receita média 
+dados_vendas_limpos |>
+  summarise(receita_media = mean(receita))
+
+# calcula a receita total
+dados_vendas_limpos |>
+  summarise(receita_total = sum(receita))
+
+#calcula o número de representantes distintos nos dados 
+dados_vendas_limpos |>
+  summarise(numero_representantes = n_distinct(representante))
+
+# calcula o número totatl de vendas realizadas 
+dados_vendas_limpos |>
+  summarise(total_vendas = n() )
+
+# calcula a receita média por cidade 
+dados_vendas_limpos |>
+  group_by(cidade) |>
+  summarise(receita_media = mean(receita))
+
+# calcula a receita média por produto 
+dados_vendas_limpos |>
+  group_by(produto) |>
+  summarise(receita_media = mean (receita))
+
+# calcula a receita média por cidade e produto 
+dados_vendas_limpos
+group_by(cidade, produto) |>
+  summarise(receita_media = mean(receita))
