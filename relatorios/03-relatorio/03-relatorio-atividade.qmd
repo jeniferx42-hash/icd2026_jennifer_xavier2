@@ -1,0 +1,146 @@
+---
+lang: pt-BR
+title: "Análise Descritiva do Crédito da CoopCredMinas em 2025"
+author: "jennifer xavier"
+date:  05/05/2026
+format: pdf
+bibliography: referencias.bib
+csl: associacao-brasileira-de-normas-tecnicas-ipea.csl
+execute:
+  echo: false
+  warning: false
+  message: false
+---
+
+
+```{r}
+#| label: setup-relatorio
+
+# carrega os pacotes usados no relatório
+library(here)
+library(tidyverse)
+
+# define o caminho relativo da base analítica limpa
+caminho_base_limpa <- here::here("dados/limpos/dados_completos_limpos.rds")
+
+# importa a base já preparada no script R
+dados_completos <- readr::read_rds(caminho_base_limpa)
+
+# guarda uma tabela simples com uma linha por agência
+agencias <- dados_completos |>
+  distinct(codigo_agencia, nome_agencia, cidade, tipo_agencia, num_cooperados)
+
+# resume o volume total por cidade para a figura
+resumo_cidade <- dados_completos |>
+  group_by(cidade) |>
+  summarize(volume_total = sum(volume_credito), .groups = "drop") |>
+  arrange(desc(volume_total))
+
+# calcula valores que serão usados no texto com inline R
+volume_total_geral <- sum(dados_completos$volume_credito)
+
+# conta quantas agências entram no relatório
+n_agencias <- nrow(agencias)
+
+# identifica a cidade com maior volume agregado de crédito
+# resumo_cidade$cidade seleciona a coluna de nomes das cidades
+# [1] pega a primeira cidade do resumo já ordenado
+cidade_lider <- resumo_cidade$cidade[1]
+
+# formata o valor total no padrão que aparecerá no texto
+volume_total_fmt <- format(
+  volume_total_geral,
+  big.mark = ".",
+  decimal.mark = ",",
+  scientific = FALSE
+)
+```
+
+
+# Contexto
+
+Este relatório resume os dados de `{r} n_agencias` agências da
+CoopCredMinas. O volume total de crédito no período analisado foi de
+R$ `{r} volume_total_fmt`. Entre as cidades observadas, `{r} cidade_lider`
+apresentou o maior volume agregado.
+
+
+# Análise Descritiva
+
+A @tbl-agencias apresenta as agências incluídas no relatório.
+
+```{r}
+#| label: tbl-agencias
+#| tbl-cap: "Agências da CoopCredMinas incluídas no relatório."
+
+# seleciona as colunas que entrarão na tabela final
+agencias |>
+  select(nome_agencia, cidade, tipo_agencia, num_cooperados) |>
+  # ordena da maior para a menor quantidade de cooperados
+  arrange(desc(num_cooperados)) |>
+  # cria uma tabela simples com nomes de colunas mais claros
+  knitr::kable(
+    col.names = c("Agência", "Cidade", "Tipo", "Cooperados")
+  )
+```
+
+A @fig-volume-cidade mostra que `{r} cidade_lider` concentrou o maior
+volume de crédito no período analisado. Esse resultado sugere acompanhar 
+com mais atenção essa praça nas próximas decisões comerciais da cooperativa.
+
+```{r}
+#| label: fig-volume-cidade
+#| fig-cap: "Volume total de crédito por cidade."
+#| fig-width: 6.5
+#| fig-height: 4.5
+
+# usa a tabela resumida como base do gráfico
+resumo_cidade |>
+  # ordena as cidades pelo volume para facilitar a leitura
+  ggplot(aes(x = reorder(cidade, volume_total), y = volume_total)) +
+  # desenha as barras do gráfico
+  geom_col(fill = "steelblue") +
+  # escreve o valor em cada barra
+  geom_text(
+    aes(
+      label = scales::label_number(
+        big.mark = ".",
+        decimal.mark = ",",
+        prefix = "R$ "
+      )(volume_total)
+    ),
+    hjust = 1.05,
+    color = "white",
+    size = 4
+  ) +
+  # gira o gráfico para melhorar a leitura dos nomes das cidades
+  coord_flip() +
+  # define os rótulos principais do gráfico
+  labs(
+    x = "Cidade",
+    y = "Volume total (R$)"
+  ) +
+  # formata o eixo numérico
+  scale_y_continuous(
+    labels = scales::label_number(big.mark = ".", decimal.mark = ","),
+    expand = expansion(mult = c(0, 0.03))
+  ) +
+  # aplica um tema simples e limpa elementos visuais desnecessários
+  theme_minimal(base_size = 12) +
+  theme(
+    panel.grid.major.y = element_blank(),
+    axis.title.y = element_blank()
+  )
+```
+
+
+# Recomendações
+
+A comunicação clara dos resultados é parte essencial de uma análise
+reprodutível [@r4ds2ed].
+
+
+# Referências
+
+::: {#refs}
+:::
